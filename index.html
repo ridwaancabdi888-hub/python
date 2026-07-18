@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn Python from beginner to intermediate with interactive lessons, projects, quizzes, and a browser-based code editor.">
+  <meta name="theme-color" content="#306998">
+  <title>Learn Python — Beginner to Intermediate</title>
+  <link rel="icon" href="assets/python-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Learn Python home">
+      <img src="assets/python-mark.svg" alt="" width="42" height="42">
+      <span>Learn <strong>Python</strong></span>
+    </a>
+    <nav class="top-actions" aria-label="Primary navigation">
+      <button class="icon-button mobile-only" id="menu-toggle" aria-label="Open lessons menu" aria-expanded="false">☰</button>
+      <button class="icon-button" id="theme-toggle" aria-label="Switch color theme" title="Switch theme">☾</button>
+    </nav>
+  </header>
+
+  <aside class="sidebar" id="sidebar" aria-label="Course navigation">
+    <div class="sidebar-progress">
+      <div class="progress-copy"><span>Your progress</span><strong id="progress-label">0%</strong></div>
+      <div class="progress-track" role="progressbar" aria-label="Course completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+    </div>
+    <nav id="lesson-navigation"></nav>
+    <div class="sidebar-links">
+      <a href="#playground">⌨ Playground</a>
+      <a href="#quiz">✓ Quiz</a>
+      <a href="#projects">◆ Projects</a>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" id="sidebar-scrim" aria-label="Close lessons menu"></button>
+
+  <main id="main-content">
+    <section class="hero page-section" id="home">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">A practical Python course</span>
+        <h1>Turn curiosity into <span>working code.</span></h1>
+        <p>Learn Python one clear lesson at a time. Read friendly explanations, run real code in your browser, test your knowledge, and build projects you can keep.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#lesson/introduction">Start Learning <span>→</span></a>
+          <a class="button secondary" href="#playground">Try the Editor</a>
+        </div>
+        <div class="hero-stats" aria-label="Course statistics">
+          <div><strong>20</strong><span>Lessons</span></div>
+          <div><strong>6</strong><span>Projects</span></div>
+          <div><strong>100%</strong><span>Free</span></div>
+        </div>
+      </div>
+      <div class="hero-code reveal" aria-label="Python code example">
+        <div class="code-window-bar"><span></span><span></span><span></span><small>hello_python.py</small></div>
+        <pre><code class="language-python">class Learner:
+    def __init__(self, name):
+        self.name = name
+
+    def begin(self):
+        return f"Welcome, {self.name}!"
+
+student = Learner("Ridwaan")
+print(student.begin())
+# Welcome, Ridwaan!</code></pre>
+      </div>
+    </section>
+
+    <section class="page-section course-overview" id="course">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Learning path</span>
+        <h2>Everything you need to build a strong foundation</h2>
+        <p>Start with the basics, develop problem-solving skills, and finish with intermediate Python concepts.</p>
+      </div>
+      <div class="path-grid" id="path-grid"></div>
+      <div class="lesson-grid" id="lesson-grid"></div>
+    </section>
+
+    <section class="page-section lesson-view hidden" id="lesson-view" aria-live="polite">
+      <div id="lesson-content"></div>
+    </section>
+
+    <section class="page-section playground" id="playground">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Python playground</span>
+        <h2>Write it. Run it. Understand it.</h2>
+        <p>Python runs safely in your browser with Pyodide. The first run may take a few seconds while Python loads.</p>
+      </div>
+      <div class="editor-shell reveal">
+        <div class="editor-toolbar">
+          <div class="file-tab"><span class="status-dot"></span> main.py</div>
+          <div class="editor-actions">
+            <button class="small-button" id="reset-code">Reset</button>
+            <button class="button primary run-button" id="run-code"><span>▶</span> Run Code</button>
+          </div>
+        </div>
+        <label class="sr-only" for="python-editor">Python code editor</label>
+        <textarea id="python-editor" spellcheck="false"># Try changing the name or adding another goal
+learner = {"name": "Ridwaan", "goals": ["Learn syntax", "Build projects"]}
+
+print(f"Hello, {learner['name']}!")
+for number, goal in enumerate(learner["goals"], start=1):
+    print(f"{number}. {goal}")</textarea>
+        <div class="output-panel">
+          <div class="output-header"><span>OUTPUT</span><button id="clear-output">Clear</button></div>
+          <pre id="python-output" aria-live="polite">Ready. Press “Run Code” to begin.</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section quiz-section" id="quiz">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Knowledge check</span>
+        <h2>How much have you learned?</h2>
+        <p>Answer ten questions and get instant feedback.</p>
+      </div>
+      <div class="quiz-card reveal" id="quiz-card">
+        <div class="quiz-topline"><span id="quiz-counter">Question 1 of 10</span><strong id="quiz-score">Score: 0</strong></div>
+        <div class="quiz-progress"><span id="quiz-progress-fill"></span></div>
+        <h3 id="quiz-question"></h3>
+        <div id="quiz-options" class="quiz-options"></div>
+        <p id="quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+        <button class="button primary hidden" id="next-question">Next Question →</button>
+      </div>
+      <div class="quiz-card quiz-result hidden" id="quiz-result">
+        <div class="result-ring"><strong id="final-score">0/10</strong></div>
+        <h3 id="result-title">Great work!</h3>
+        <p id="result-message"></p>
+        <button class="button primary" id="restart-quiz">Restart Quiz</button>
+      </div>
+    </section>
+
+    <section class="page-section projects-section" id="projects">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Build to learn</span>
+        <h2>Six projects for your portfolio</h2>
+        <p>Each project includes requirements, complete source code, and instructions.</p>
+      </div>
+      <div class="projects-grid" id="projects-grid"></div>
+    </section>
+  </main>
+
+  <dialog id="project-modal" class="project-modal">
+    <button class="modal-close" id="modal-close" aria-label="Close project">×</button>
+    <div id="project-modal-content"></div>
+  </dialog>
+
+  <footer>
+    <a class="brand" href="#home"><img src="assets/python-mark.svg" alt="" width="36" height="36"><span>Learn <strong>Python</strong></span></a>
+    <p>Learn. Practice. Build. Repeat.</p>
+    <p>Created by <strong>Ridwaan</strong> · <span id="year"></span></p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
