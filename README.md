@@ -6,9 +6,9 @@ A modern, responsive learning platform that teaches Python from beginner to inte
 
 ## Live Demo
 
-After GitHub Pages is enabled, the site will be available at:
+The production website is deployed on Vercel:
 
-**https://ridwaancabdi888-hub.github.io/python/**
+**https://learn-python-ridwaan.vercel.app/**
 
 ## Features
 
@@ -109,7 +109,19 @@ Then visit [http://localhost:8000](http://localhost:8000).
 
 An internet connection is required the first time the code editor loads because Pyodide and Prism.js are delivered from a CDN.
 
-## Deploy to GitHub Pages
+## Deploy to Vercel
+
+This project is currently deployed as the Vercel project `learn-python-ridwaan`.
+
+1. Import this GitHub repository into Vercel.
+2. Keep the framework preset as **Other** because this is a static website.
+3. Leave the build command empty.
+4. Set the output directory to the repository root (`.`).
+5. Deploy the `main` branch.
+
+The production URL is [https://learn-python-ridwaan.vercel.app/](https://learn-python-ridwaan.vercel.app/).
+
+## Alternative: Deploy to GitHub Pages
 
 1. Open this repository on GitHub.
 2. Select **Settings**.
