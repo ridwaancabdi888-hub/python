@@ -105,6 +105,12 @@ From the repository folder, run:
 python -m http.server 8000
 ```
 
+On Windows, if the `python` command is not recognized, use the Python launcher instead:
+
+```powershell
+py -m http.server 8000
+```
+
 Then visit [http://localhost:8000](http://localhost:8000).
 
 An internet connection is required the first time the code editor loads because Pyodide and Prism.js are delivered from a CDN.
