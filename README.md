@@ -115,6 +115,12 @@ Then visit [http://localhost:8000](http://localhost:8000).
 
 An internet connection is required the first time the code editor loads because Pyodide and Prism.js are delivered from a CDN.
 
+### Local server troubleshooting
+
+- Stop the local server by returning to the terminal and pressing `Ctrl+C`.
+- If port `8000` is already in use, choose another port, for example `python -m http.server 8080` (or `py -m http.server 8080` on Windows), then open [http://localhost:8080](http://localhost:8080).
+- Run the command from the repository root so `index.html`, `css/`, `js/`, and `assets/` are served from the expected paths.
+
 ## Deploy to Vercel
 
 This project is currently deployed as the Vercel project `learn-python-ridwaan`.
