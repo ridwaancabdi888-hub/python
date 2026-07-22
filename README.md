@@ -159,6 +159,25 @@ Add screenshots here after the first GitHub Pages deployment:
 
 The platform is designed for current versions of Chrome, Edge, Firefox, and Safari. Pyodide requires WebAssembly support, which is available in modern browsers.
 
+## SEO and Google Search Console
+
+The production SEO endpoints are:
+
+- Canonical website: https://learn-python-ridwaan.vercel.app/
+- Sitemap: https://learn-python-ridwaan.vercel.app/sitemap.xml
+- Robots file: https://learn-python-ridwaan.vercel.app/robots.txt
+
+To add the site to Google Search Console:
+
+1. Open [Google Search Console](https://search.google.com/search-console) and add the URL-prefix property `https://learn-python-ridwaan.vercel.app/`.
+2. Choose the HTML tag verification method and copy the verification token.
+3. Add `<meta name="google-site-verification" content="YOUR_TOKEN">` inside the `<head>` of `index.html`, deploy it, then select **Verify** in Search Console.
+4. Open **Sitemaps**, submit `sitemap.xml`, and confirm that Google can read it.
+5. Open **URL Inspection**, inspect the homepage URL, and select **Request Indexing** after the deployment is live.
+6. Use URL Inspection again after important content changes. Indexing and rankings are decided by Google and are not guaranteed.
+
+Because lessons use URL fragments such as `#lesson/variables`, the sitemap intentionally lists only the canonical homepage. If lessons later become separate crawlable URLs, add those real URLs to the sitemap.
+
 ## Future Improvements
 
 - Add more intermediate and advanced lessons
