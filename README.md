@@ -99,10 +99,10 @@ Open `index.html` in a modern browser. Most of the site works this way, but some
 
 ### Option 2: Use a local server (recommended)
 
-From the repository folder, run:
+On macOS or Linux, from the repository folder, run:
 
 ```bash
-python -m http.server 8000
+python3 -m http.server 8000
 ```
 
 On Windows, if the `python` command is not recognized, use the Python launcher instead:
@@ -118,7 +118,7 @@ An internet connection is required the first time the code editor loads because 
 ### Local server troubleshooting
 
 - Stop the local server by returning to the terminal and pressing `Ctrl+C`.
-- If port `8000` is already in use, choose another port, for example `python -m http.server 8080` (or `py -m http.server 8080` on Windows), then open [http://localhost:8080](http://localhost:8080).
+- If port `8000` is already in use, choose another port, for example `python3 -m http.server 8080` (or `py -m http.server 8080` on Windows), then open [http://localhost:8080](http://localhost:8080).
 - Run the command from the repository root so `index.html`, `css/`, `js/`, and `assets/` are served from the expected paths.
 
 ## Deploy to Vercel
