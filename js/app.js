@@ -1,5 +1,8 @@
 const STORAGE_KEYS = { theme: 'learn-python-theme', progress: 'learn-python-progress' };
-const completedLessons = new Set(JSON.parse(localStorage.getItem(STORAGE_KEYS.progress) || '[]'));
+const storage = LearnPythonStorage.createSafeStorage(() => window.localStorage);
+const savedProgress = LearnPythonStorage.parseStringArray(storage.get(STORAGE_KEYS.progress, '[]'));
+const lessonIds = new Set(LESSONS.map(lesson => lesson.id));
+const completedLessons = new Set(savedProgress.filter(id => lessonIds.has(id)));
 let pyodideInstance = null;
 let pyodideLoading = null;
 
@@ -66,7 +69,7 @@ function renderLesson(id) {
 }
 
 function updateProgress() {
-  localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify([...completedLessons]));
+  storage.set(STORAGE_KEYS.progress, JSON.stringify([...completedLessons]));
   const percentage = Math.round(completedLessons.size / LESSONS.length * 100);
   byId('progress-label').textContent = `${percentage}%`;
   byId('progress-fill').style.width = `${percentage}%`;
@@ -101,7 +104,7 @@ function route() {
 }
 
 function setupTheme() {
-  const stored = localStorage.getItem(STORAGE_KEYS.theme);
+  const stored = storage.get(STORAGE_KEYS.theme);
   const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   const apply = theme => {
     document.documentElement.dataset.theme = theme;
@@ -111,7 +114,7 @@ function setupTheme() {
   apply(stored || preferred);
   byId('theme-toggle').addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(STORAGE_KEYS.theme, next); apply(next);
+    storage.set(STORAGE_KEYS.theme, next); apply(next);
   });
 }
 
