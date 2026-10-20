@@ -178,17 +178,17 @@ for number, goal in enumerate(learner["goals"], start=1):
         <h2>How much have you learned?</h2>
         <p>Answer ten questions and get instant feedback.</p>
       </div>
-      <div class="quiz-card reveal" id="quiz-card">
-        <div class="quiz-topline"><span id="quiz-counter">Question 1 of 10</span><strong id="quiz-score">Score: 0</strong></div>
-        <div class="quiz-progress"><span id="quiz-progress-fill"></span></div>
-        <h3 id="quiz-question"></h3>
-        <div id="quiz-options" class="quiz-options"></div>
-        <p id="quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+      <div class="quiz-card reveal" id="quiz-card" role="region" aria-labelledby="quiz-question">
+        <div class="quiz-topline"><span id="quiz-counter">Question 1 of 10</span><strong id="quiz-score" role="status" aria-live="polite">Score: 0</strong></div>
+        <div class="quiz-progress" id="quiz-progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"><span id="quiz-progress-fill"></span></div>
+        <h3 id="quiz-question" tabindex="-1"></h3>
+        <div id="quiz-options" class="quiz-options" role="group" aria-labelledby="quiz-question"></div>
+        <p id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
         <button class="button primary hidden" id="next-question">Next Question →</button>
       </div>
-      <div class="quiz-card quiz-result hidden" id="quiz-result">
+      <div class="quiz-card quiz-result hidden" id="quiz-result" role="region" aria-labelledby="result-title">
         <div class="result-ring"><strong id="final-score">0/10</strong></div>
-        <h3 id="result-title">Great work!</h3>
+        <h3 id="result-title" tabindex="-1">Great work!</h3>
         <p id="result-message"></p>
         <button class="button primary" id="restart-quiz">Restart Quiz</button>
       </div>

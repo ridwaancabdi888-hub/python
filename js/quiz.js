@@ -21,13 +21,19 @@ function createQuiz() {
   const options = document.querySelector('#quiz-options');
   const feedback = document.querySelector('#quiz-feedback');
   const next = document.querySelector('#next-question');
+  const progress = document.querySelector('#quiz-progress');
+  const progressFill = document.querySelector('#quiz-progress-fill');
+  const resultTitle = document.querySelector('#result-title');
 
-  function render() {
+  function render({ focusQuestion = false } = {}) {
     answered = false;
     const item = QUIZ_QUESTIONS[index];
     document.querySelector('#quiz-counter').textContent = `Question ${index + 1} of ${QUIZ_QUESTIONS.length}`;
     document.querySelector('#quiz-score').textContent = `Score: ${score}`;
-    document.querySelector('#quiz-progress-fill').style.width = `${(index / QUIZ_QUESTIONS.length) * 100}%`;
+    progressFill.style.width = `${((index + 1) / QUIZ_QUESTIONS.length) * 100}%`;
+    progress.setAttribute('aria-valuemax', String(QUIZ_QUESTIONS.length));
+    progress.setAttribute('aria-valuenow', String(index + 1));
+    progress.setAttribute('aria-valuetext', `Question ${index + 1} of ${QUIZ_QUESTIONS.length}`);
     question.textContent = item.question;
     feedback.textContent = '';
     feedback.className = 'quiz-feedback';
@@ -40,6 +46,7 @@ function createQuiz() {
       button.addEventListener('click', () => answer(choice));
       options.append(button);
     });
+    if (focusQuestion) question.focus();
   }
 
   function answer(choice) {
@@ -49,12 +56,14 @@ function createQuiz() {
     const buttons = [...options.children];
     buttons.forEach(button => { button.disabled = true; });
     buttons[item.answer].classList.add('correct');
+    buttons[item.answer].setAttribute('aria-label', `${buttons[item.answer].textContent}. Correct answer`);
     if (choice === item.answer) {
       score += 1;
       feedback.textContent = `Correct! ${item.explanation}`;
       feedback.style.color = 'var(--green)';
     } else {
       buttons[choice].classList.add('incorrect');
+      buttons[choice].setAttribute('aria-label', `${buttons[choice].textContent}. Your answer, incorrect`);
       feedback.textContent = `Not quite. ${item.explanation}`;
       feedback.style.color = 'var(--red)';
     }
@@ -71,13 +80,14 @@ function createQuiz() {
     document.querySelector('.result-ring').style.background = `conic-gradient(var(--yellow) ${percentage}%, var(--surface-2) 0)`;
     document.querySelector('#result-title').textContent = percentage >= 80 ? 'Excellent work!' : percentage >= 60 ? 'Good progress!' : 'Keep practicing!';
     document.querySelector('#result-message').textContent = percentage >= 80 ? 'You have a strong Python foundation.' : 'Review the lessons you found difficult, then try again.';
+    resultTitle.focus();
   }
 
   next.addEventListener('click', () => {
-    if (index < QUIZ_QUESTIONS.length - 1) { index += 1; render(); } else finish();
+    if (index < QUIZ_QUESTIONS.length - 1) { index += 1; render({ focusQuestion: true }); } else finish();
   });
   document.querySelector('#restart-quiz').addEventListener('click', () => {
-    index = 0; score = 0; result.classList.add('hidden'); card.classList.remove('hidden'); render();
+    index = 0; score = 0; result.classList.add('hidden'); card.classList.remove('hidden'); render({ focusQuestion: true });
   });
   render();
 }
