@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const storageSource = fs.readFileSync(path.join(__dirname, '../js/storage.js'), 'utf8');
+const runtimeLoaderSource = fs.readFileSync(path.join(__dirname, '../js/runtime-loader.js'), 'utf8');
 const appSource = fs.readFileSync(path.join(__dirname, '../js/app.js'), 'utf8');
 
 function runAppWithStorage(storageDescriptor) {
@@ -33,6 +34,7 @@ function runAppWithStorage(storageDescriptor) {
   });
 
   vm.runInContext(storageSource, context, { filename: 'storage.js' });
+  vm.runInContext(runtimeLoaderSource, context, { filename: 'runtime-loader.js' });
   vm.runInContext(appSource, context, { filename: 'app.js' });
 }
 

@@ -4,7 +4,19 @@ const savedProgress = LearnPythonStorage.parseStringArray(storage.get(STORAGE_KE
 const lessonIds = new Set(LESSONS.map(lesson => lesson.id));
 const completedLessons = new Set(savedProgress.filter(id => lessonIds.has(id)));
 let pyodideInstance = null;
-let pyodideLoading = null;
+const loadPyodideRuntime = LearnPythonRuntime.createRetryableLoader(() => new Promise((resolve, reject) => {
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';
+  script.onload = async () => {
+    try {
+      resolve(await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'}));
+    } catch (error) {
+      reject(error);
+    }
+  };
+  script.onerror = () => reject(new Error('Could not download Pyodide. Check your internet connection.'));
+  document.head.append(script);
+}));
 
 const byId = id => document.getElementById(id);
 
@@ -146,16 +158,7 @@ function setupEditor() {
     button.disabled = true; output.classList.remove('output-error'); output.textContent = 'Loading Python runtime…';
     try {
       if (!pyodideInstance) {
-        if (!pyodideLoading) {
-          pyodideLoading = new Promise((resolve,reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';
-            script.onload = async () => resolve(await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'}));
-            script.onerror = () => reject(new Error('Could not download Pyodide. Check your internet connection.'));
-            document.head.append(script);
-          });
-        }
-        pyodideInstance = await pyodideLoading;
+        pyodideInstance = await loadPyodideRuntime();
       }
       pyodideInstance.setStdout({batched: text => { output.textContent += `${text}\n`; }});
       pyodideInstance.setStderr({batched: text => { output.textContent += `${text}\n`; }});
